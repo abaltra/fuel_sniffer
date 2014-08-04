@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0014)about:internet -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Buscador de servicentros CNE</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="./css/template.css" type="text/css" />
+<script type="text/javascript" src="./js/prototype.js"></script>
+<script type="text/javascript" src="./js/buscador.js"></script> 
+<style type="text/css">
+td img {display: block;}body {
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    background-color: #E8F3F9;
+}
+</style>
+<!--[if lte IE 7]>
+<link rel="stylesheet" href="./css/ieonly.css" type="text/css" />
+<![endif]-->
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+</head>
+<body>
+<table width="1265" border="0" align="center" cellpadding="0" cellspacing="0">
+<!-- fwtable fwsrc="maqueta CNE v2.png" fwpage="Página 1" fwbase="index.png" fwstyle="Dreamweaver" fwdocid = "1395491741" fwnested="0" -->
+  <tr>
+   <td><img src="img/spacer.gif" width="142" height="1" border="0" alt="" /></td>
+   <td><img src="img/spacer.gif" width="981" height="1" border="0" alt="" /></td>
+   <td><img src="img/spacer.gif" width="142" height="1" border="0" alt="" /></td>
+   <td><img src="img/spacer.gif" width="1" height="1" border="0" alt="" /></td>
+  </tr>
+
+  <tr>
+   <td background="img/index_r1_c1.png"><img name="index_r1_c1" src="img/index_r1_c1.png" width="142" height="11" border="0" id="index_r1_c1" alt="" /></td>
+   <td rowspan="2" width="981" height="176" background="img/index_r1_c2.png"><div style="position:relative"><div style="position:absolute; float: left; bottom:80px;left:214px;text-align:left;">
+       <font color="145e98" size="4px">SISTEMA DE INFORMACIÓN EN LÍNEA<br>
+       DE PRECIOS DE COMBUSTIBLES<br>
+       EN ESTACIONES DE SERVICIO </font>
+   </div><img src="img/spacer.gif" width="1" height="176" border="0" alt="" /><div style="position:absolute; top:118px; left:220px; width:750px; font-size:8pt; font-family:Arial, Helvetica, sans-serif">“Los precios publicados en el presente sitio web son de exclusiva responsabilidad de las estaciones de servicio informantes. Los precios publicados podrán presentar un desfase máximo de 15 minutos de antelación respecto de los precios publicados en la paleta de la respectiva estación de servicio”</div></div></td>
+   <td background="img/index_r1_c3.png"><img name="index_r1_c3" src="img/index_r1_c3.png" width="142" height="11" border="0" id="index_r1_c3" alt="" /></td>
+   <td><img src="img/spacer.gif" width="1" height="11" border="0" alt="" /></td>
+  </tr>
+  <tr>
+   <td rowspan="3" background="img/index_r1_c1.png">&nbsp;</td>
+   <td rowspan="3" background="img/index_r1_c3.png">&nbsp;</td>
+   
+  </tr>
+  <tr>
+   <td background="img/index_r3_c2.png" align="center">
+   
+   
+   <table width="98%" border="0" align="center" cellpadding="5" cellspacing="0">
+   <tr><td>
+   <table width="98%" border="0" cellspacing="0" cellpadding="5" bgcolor="#E4E4E4">
+      <tr>
+        <td colspan="6" align="center"><strong style="font-size:9pt">Listado de precios</strong></td>
+        </tr>
+      <tr>
+        <td align="left" width="16%">Región:</td>
+        <td align="left" width="16%"><select name="reporte_region" id="reporte_region" onchange="imprimir_comuna('tabla','16ec33f57fb46d474abfd5d36207b17f');" style="width:120px;">
+        <option value='1' selected>Arica y Parinacota</option>
+            <option value='2' >Tarapacá</option>
+            <option value='3' >Antofagasta</option>
+            <option value='4' >Atacama</option>
+            <option value='5' >Coquimbo</option>
+            <option value='6' >Valparaíso</option>
+            <option value='7' >Metropolitana</option>
+            <option value='8' >Gral. Bernardo O'Higgins</option>
+            <option value='9' >Maule</option>
+            <option value='10' >Bío Bío</option>
+            <option value='11' >Aracucanía</option>
+            <option value='12' >Los Ríos</option>
+            <option value='13' >Los Lagos</option>
+            <option value='14' >Aysén Gral. C. Ibáñez del Campo</option>
+            <option value='15' >Magallanes y la Antártida Chilena</option>
+        </select></td>
+        <td align="left" width="16%">Comuna:</td>
+        <td align="left" width="16%">
+            <div id="select_comuna_tabla">
+            <select name="reporte_comuna" id="reporte_comuna" style="width:120px;">
+                <option value='**'>Todas</option>
+            </select>
+            </div>
+        </td>
+        <td align="left" width="11%">Orden Precios:</td>
+        <td align="left" width="21%"><select name="orden" id="orden" style="width:120px;">
+        <option value='menor_mayor'>Menor a mayor</option>
+            <option value='mayor_menor'>Mayor a menor</option>
+        </select></td>
+        </tr>
+        <tr>
+        <td align="left" width="16%">Combustible:</td>
+        <td align="left" width="16%"><select name="reporte_combustible" id="reporte_combustible" style="width:120px;">
+        <option value="">Seleccione</option>
+        <option value='1'>Gasolina 93</option>
+            <option value='7'>Gasolina 95</option>
+            <option value='2'>Gasolina 97</option>
+            <option value='6'>GLP Vehicular</option>
+            <option value='5'>GNC</option>
+            <option value='4'>Kerosene</option>
+            <option value='3'>Petroleo Diesel</option>
+        </select></td>
+        <td align="left" width="16%">Servicentro:</td>
+        <td align="left" width="16%">
+        <select name="reporte_bandera" id="reporte_bandera" style="width:120px;">
+        <option value='**'>Todos</option>
+        <option value='23'>ABASTIBLE</option><option value='27'>APEX</option><option value='33'>ATT</option><option value='28'>AUTOGASCO</option><option value='30'>CASTROL</option><option value='21'>CAVE</option><option value='44'>CHILIN</option><option value='52'>Combustible Alhue</option><option value='43'>COMBUSTIBLES AMADE</option><option value='50'>Combustibles Endless.com</option><option value='18'>COMBUSTIBLES JCD</option><option value='48'>Combustibles Ortiz</option><option value='36'>COMERCIAL MAQUI</option><option value='51'>Coopeserau</option><option value='5'>COPEC</option><option value='57'>DELPA</option><option value='31'>DMAX</option><option value='53'>ECCO</option><option value='55'>ECOGREEN LTDA.</option><option value='35'>EL HUIQUE</option><option value='16'>ENERSUR S.A.</option><option value='54'>FACAZ</option><option value='32'>FLORES</option><option value='20'>GYT COMBUSTIBLES</option><option value='25'>HN</option><option value='17'>HOLA!</option><option value='41'>J Allel</option><option value='12'>JLC</option><option value='14'>LIDER S.A.</option><option value='24'>LIPIGAS</option><option value='11'>LVT COMBUSTIBLES</option><option value='2'>PETROBRAS</option><option value='39'>PETROJAC</option><option value='49'>PROGRESA S.A.</option><option value='56'>Puma Verde</option><option value='47'>Rafael Letelier Ya�ez y Cia Ltda</option><option value='29'>SERVI-AIKEN</option><option value='42'>SERVICENTRO LEAL</option><option value='46'>SERVICENTRO SAN MIGUEL</option><option value='45'>SERVICENTROS RABALME</option><option value='15'>SESA</option><option value='4'>SHELL</option><option value='10'>Sin Bandera</option><option value='19'>SINHEL</option><option value='40'>SOCORRO</option><option value='34'>SUAREZ COMBUSTIBLES</option><option value='37'>SURENERGY</option><option value='3'>TERPEL</option><option value='38'>Uligas</option><option value='26'>VIVA COMBUSTIBLES</option>        </select></td>
+        <td colspan="2" align="center"><input type="button" onclick="if (validarreporte()) {imprimir_tabla('16ec33f57fb46d474abfd5d36207b17f'); imprimir_tabla_resumen('16ec33f57fb46d474abfd5d36207b17f');}" value="Ver reporte" /></td>
+      </tr> 
+    </table>
+      <p>&nbsp;</p>
+      <table id="tabla_resumen" width="98%" border="0" cellspacing="0" cellpadding="5" bgcolor="#E4E4E4">
+        
+      </table>
+      <p>&nbsp;</p>
+      <div style="height:250px;overflow:auto;width:98%" id="tabla">
+      <table style="height:250px;width:50%" align="center"><tr><td style="font-size:9pt" valign="top" align="center">Para ver el listado de estaciones de servicio y sus precios debe seleccionar primero un combustible. Puede también filtrar por región, comuna y servicentro. Luego haga click sobre "Ver reporte".</td></tr>
+<tr><td valign="bottom"><p style="font-size:9pt" align="center">Para buscar estaciones de servicio con los precios de todos los combustibles que expenden y otras características de la estación puede navegar directamente por el mapa o bien filtrar por parámetros específicos y luego hacer click en "Buscar".</p></td></tr></table>
+            </div>
+   </td>
+   </tr>
+   </table>
+   <table width="98%" border="0" align="center" cellpadding="5" cellspacing="0">
+  <tr>
+    <td valign="top"><table width="98%" border="0" cellspacing="0" cellpadding="5" bgcolor="#E4E4E4">
+      <tr>
+        <td colspan="5" align="center"><strong style="font-size:9pt">B&uacute;squeda de servicentros</strong></td>
+        </tr>
+      <tr>
+        <td align="left" width="16%">Región:</td>
+        <td align="left" width="16%">
+            <select name="buscador_region" id="buscador_region" onchange="imprimir_comuna('mapas','16ec33f57fb46d474abfd5d36207b17f');" style="width:120px;">
+            <option value='1' selected>Arica y Parinacota</option>
+            <option value='2' >Tarapacá</option>
+            <option value='3' >Antofagasta</option>
+            <option value='4' >Atacama</option>
+            <option value='5' >Coquimbo</option>
+            <option value='6' >Valparaíso</option>
+            <option value='7' >Metropolitana</option>
+            <option value='8' >Gral. Bernardo O'Higgins</option>
+            <option value='9' >Maule</option>
+            <option value='10' >Bío Bío</option>
+            <option value='11' >Aracucanía</option>
+            <option value='12' >Los Ríos</option>
+            <option value='13' >Los Lagos</option>
+            <option value='14' >Aysén Gral. C. Ibáñez del Campo</option>
+            <option value='15' >Magallanes y la Antártida Chilena</option>
+            </select></td>
+        <td align="left" width="16%">Comuna:</td>
+        <td align="left" width="16%"><div id="select_comuna_mapa"><select name="buscador_comuna" id="buscador_comuna" style="width:120px;"><option value="**">Todas</option></select></div></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td align="left" width="16%">Combustible:</td>
+        <td align="left" width="16%">
+            <select name="buscador_combustible" id="buscador_combustible" style="width:120px;">
+            <option value='**'>Todos</option>
+            <option value='1'>Gasolina 93</option>
+            <option value='7'>Gasolina 95</option>
+            <option value='2'>Gasolina 97</option>
+            <option value='6'>GLP Vehicular</option>
+            <option value='5'>GNC</option>
+            <option value='4'>Kerosene</option>
+            <option value='3'>Petroleo Diesel</option>
+            </select></td>
+        <td align="left" width="16%">Servicentro:</td>
+        <td align="left" width="16%">
+            <select name="buscador_bandera" id="buscador_bandera" style="width:120px;">
+            <option value='**'>Todos</option>
+            <option value='23'>ABASTIBLE</option><option value='27'>APEX</option><option value='33'>ATT</option><option value='28'>AUTOGASCO</option><option value='30'>CASTROL</option><option value='21'>CAVE</option><option value='44'>CHILIN</option><option value='52'>Combustible Alhue</option><option value='43'>COMBUSTIBLES AMADE</option><option value='50'>Combustibles Endless.com</option><option value='18'>COMBUSTIBLES JCD</option><option value='48'>Combustibles Ortiz</option><option value='36'>COMERCIAL MAQUI</option><option value='51'>Coopeserau</option><option value='5'>COPEC</option><option value='57'>DELPA</option><option value='31'>DMAX</option><option value='53'>ECCO</option><option value='55'>ECOGREEN LTDA.</option><option value='35'>EL HUIQUE</option><option value='16'>ENERSUR S.A.</option><option value='54'>FACAZ</option><option value='32'>FLORES</option><option value='20'>GYT COMBUSTIBLES</option><option value='25'>HN</option><option value='17'>HOLA!</option><option value='41'>J Allel</option><option value='12'>JLC</option><option value='14'>LIDER S.A.</option><option value='24'>LIPIGAS</option><option value='11'>LVT COMBUSTIBLES</option><option value='2'>PETROBRAS</option><option value='39'>PETROJAC</option><option value='49'>PROGRESA S.A.</option><option value='56'>Puma Verde</option><option value='47'>Rafael Letelier Ya�ez y Cia Ltda</option><option value='29'>SERVI-AIKEN</option><option value='42'>SERVICENTRO LEAL</option><option value='46'>SERVICENTRO SAN MIGUEL</option><option value='45'>SERVICENTROS RABALME</option><option value='15'>SESA</option><option value='4'>SHELL</option><option value='10'>Sin Bandera</option><option value='19'>SINHEL</option><option value='40'>SOCORRO</option><option value='34'>SUAREZ COMBUSTIBLES</option><option value='37'>SURENERGY</option><option value='3'>TERPEL</option><option value='38'>Uligas</option><option value='26'>VIVA COMBUSTIBLES</option>            </select></td>
+        <td><input type="button" onclick="if (validarbuscador()) { buscar_en_mapa('16ec33f57fb46d474abfd5d36207b17f');}" value="Buscar" /></td>
+      </tr>
+    </table>
+<br />
+<div id="markersmapa" align="left" style="font-size: 14px;font-weight: bold;color: #069;font-family: Trebuchet MS, Arial, Helvetica, sans-serif;padding: 4px;margin-bottom: 3px;height:30px;"></div>
+      <div id="map_canvas" style="width:98%;height:500px;"></div>
+      <script>
+      var myLatlng = new google.maps.LatLng('-28.445','-70.67');
+
+                            
+
+                    var myOptions = {
+
+                      zoom: 4,
+
+                      center: myLatlng,
+
+                      mapTypeId: google.maps.MapTypeId.ROADMAP,
+                      
+                      mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
+                	  navigationControl: true, 
+                	  NavigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL}
+
+                    }
+
+                    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+</script>
+      
+      </td>
+  </tr>
+</table>
+<br/><br/>
+
+<!--
+
+<p style="font-size:9pt">Para reclamos o denuncias relativas al incumplimiento de la obligación de informar los precios por parte de alguna estación de servicio o  por entregar al sistema información falsa, incompleta o errónea, haga click en el banner adjunto.</p>
+
+<a href="http://www.sernac.cl/sernac2011/facilita/reclamos.php" target="_blank"><img src="img/banner-sernac.jpg" width="219" height="45" /></a>
+
+-->
+
+</td>
+
+  </tr>
+  <tr>
+   <td><img name="index_r4_c2" src="img/index_r4_c2.png" width="981" height="321" border="0" id="index_r4_c2" alt="" /></td>
+
+  </tr>
+</table>
+<script>
+
+buscar_en_mapa('16ec33f57fb46d474abfd5d36207b17f');
+imprimir_comuna('mapas','16ec33f57fb46d474abfd5d36207b17f');
+imprimir_comuna('tabla','16ec33f57fb46d474abfd5d36207b17f');
+//imprimir_tabla_resumen();
+//imprimir_tabla();
+
+</script>
+
+<script type="text/javascript">
+
+ 
+
+  var _gaq = _gaq || [];
+
+  _gaq.push(['_setAccount', 'UA-33267494-1']);
+
+  _gaq.push(['_trackPageview']);
+
+ 
+
+  (function() {
+
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+
+  })();
+
+ 
+
+</script>
+</body>
+</html>
