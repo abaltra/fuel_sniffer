@@ -1,8 +1,10 @@
 # -*- coding: latin-1 -*-
 
-import sys, re, json, urllib2
+import sys, re, json, urllib2, os
 from bs4 import BeautifulSoup
 from subprocess import Popen, PIPE
+from get_token import find_token
+from download_coords import download_coords
 
 res = {}
 
@@ -29,25 +31,29 @@ def parse(line, region):
 			station = match.group(1)
 			if res[region].get(station) is None:
 				res[region][station] = {}
-			soup = BeautifulSoup(match.group(2))
-			data = soup.find_all("table")
-			prices_table = data[1]
-			address_table = data[2]
-			ammenities_table = data[3]
-			schedule_table = data[4]
-			pay_methods_table = data[5]
+			try:
+				soup = BeautifulSoup(match.group(2))
+				data = soup.find_all("table")
+				prices_table = data[1]
+				address_table = data[2]
+				ammenities_table = data[3]
+				schedule_table = data[4]
+				pay_methods_table = data[5]
 			
-			prices = get_prices_from_table(prices_table)
-			address = get_address_from_table(address_table)
-			ammenities = get_ammenities_from_table(ammenities_table)
-			schedule = get_schedule_from_table(schedule_table)
-			pay_methods = get_pay_methods_from_table(pay_methods_table)
+				prices = get_prices_from_table(prices_table)
+				address = get_address_from_table(address_table)
+				ammenities = get_ammenities_from_table(ammenities_table)
+				schedule = get_schedule_from_table(schedule_table)
+				pay_methods = get_pay_methods_from_table(pay_methods_table)
 			
-			res[region][station]["prices"] = prices
-			res[region][station]["address"] = address
-			res[region][station]["ammenities"] = ammenities
-			res[region][station]["schedule"] = schedule
-			res[region][station]["payment_methods"] = pay_methods			
+				res[region][station]["prices"] = prices
+				res[region][station]["address"] = address
+				res[region][station]["ammenities"] = ammenities
+				res[region][station]["schedule"] = schedule
+				res[region][station]["payment_methods"] = pay_methods
+			except:
+                                sys.stderr.write(line)
+                                pass			
 
 		#part 2
 		match = re.search("marker([0-9]+) = addMarker.'(-*[0-9]+\.[0-9]+)','(-*[0-9]+\.[0-9]+)','([a-zA-Z]+)'", parts[1])
@@ -111,8 +117,13 @@ def get_pay_methods_from_table(pay_methods_table):
 	return ret
 
 if __name__ == "__main__":
-	num_lines = 1
-	for line in open(sys.argv[1]):
-		parse(line, sys.argv[2])
-		num_lines += 1
+	token = find_token('token.html')
+	for region in xrange(1, 16):
+		download_coords(token, region, 'coords.html')
+		with open('coords.html') as f:
+			for line in f:
+				parse(line, region)
+	
+	os.remove('coords.html')
+	os.remove('token.html')
 	print json.dumps(res)
