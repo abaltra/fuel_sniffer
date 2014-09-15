@@ -8,42 +8,27 @@
 #
 include_recipe 'apt'
 
-execute 'curl -sL https://deb.nodesource.com/setup | sudo bash -' do
-  command 'curl -sL https://deb.nodesource.com/setup | sudo bash -'
-  action :run
+execute 'apt-get update --fix-missing' do
+  command 'apt-get update --fix-missing'
 end
 
-package 'tesseract-ocr' do
-  action :install
-end
-
-package 'imagemagick' do
-  action :install
-end
-
-package 'vim' do
-  action :install
-end
-
-package 'python-pip' do
-  action :install
-end
-
-package 'git' do
-  action :install
-end
+package 'pkg-config'
+package 'nodejs-legacy'
+package 'npm'
+package 'python-pip'
+package 'tesseract-ocr'
+package 'imagemagick'
+package 'vim'
 
 execute 'pip install beautifulsoup4' do
   command 'pip install beautifulsoup4'
   action :run
 end
 
-execute 'npm install -g eskimo' do
-  command 'npm install -g eskimo' do
-  action :run
+execute 'npm install -g express' do
+  command 'npm install -g express'
 end
 
-execute 'install eskimo dependencies' do
-  command 'npm install'
-  cwd '/fuel_sniffer/fuel_api'
+exeucte 'npm install -g express-generator' do
+  command 'npm install -g express-generator'
 end

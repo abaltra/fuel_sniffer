@@ -1,5 +1,5 @@
 *.html
 *.pyc
-/vagrant/\.*
+.vagrant/
 *.swp
 node_modules

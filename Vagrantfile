@@ -87,7 +87,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # some recipes and/or roles.
   #
   config.vm.provision "chef_solo" do |chef|
-     chef.cookbooks_path = "../cookbooks"
+     chef.cookbooks_path = "./cookbooks"
      chef.add_recipe 'apt'
      chef.add_recipe 'fuel_sniffer'
   #   # You may also specify custom JSON attributes:
