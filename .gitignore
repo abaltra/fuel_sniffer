@@ -1,0 +1,5 @@
+*.html
+*.pyc
+/vagrant/\.*
+*.swp
+node_modules

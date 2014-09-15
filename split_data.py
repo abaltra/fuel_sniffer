@@ -8,20 +8,21 @@ from get_token import find_token
 from download_coords import download_coords
 
 res = {}
+current_station = 1
 
-def parse(line, region):
+def parse(line, region, current_station_data = {}):
+	global current_station
 	region = str(region)
 	line = line.strip()
 	if res.get(region) is None:
-		res[region] = {}
+		res[region] = {'stations':[]}
 	if line.startswith("<img src"):
+		current_station_data = {}
 		match = re.search("marker([0-9]+) = addMarker.'(-*[0-9]+\.[0-9]+)','(-*[0-9]+\.[0-9]+)','([a-zA-Z]+)'", line)
 		if match:
-			if res[region].get(match.group(1)) is None:
-				res[region][match.group(1)] = {}
-			res[region][match.group(1)]["latitude"] = match.group(2)
-			res[region][match.group(1)]["longitude"] = match.group(3)
-			res[region][match.group(1)]["name"] = match.group(4) 
+			current_station_data["latitude"] = match.group(2)
+			current_station_data["longitude"] = match.group(3)
+			current_station_data["name"] = match.group(4) 
 	elif line.startswith("ocultar"):
 		pass
 	else:
@@ -29,9 +30,6 @@ def parse(line, region):
 		#do part 1
 		match = re.search("}\);infowindow([0-9]+) = addInfobox\('(.+)'\);", parts[0])
 		if match:
-			station = match.group(1)
-			if res[region].get(station) is None:
-				res[region][station] = {}
 			try:
 				soup = BeautifulSoup(match.group(2))
 				data = soup.find_all("table")
@@ -47,11 +45,11 @@ def parse(line, region):
 				schedule = get_schedule_from_table(schedule_table)
 				pay_methods = get_pay_methods_from_table(pay_methods_table)
 			
-				res[region][station]["prices"] = prices
-				res[region][station]["address"] = address
-				res[region][station]["ammenities"] = ammenities
-				res[region][station]["schedule"] = schedule
-				res[region][station]["payment_methods"] = pay_methods
+				current_station_data["prices"] = prices
+				current_station_data["address"] = address
+				current_station_data["ammenities"] = ammenities
+				current_station_data["schedule"] = schedule
+				current_station_data["payment_methods"] = pay_methods
 			except:
                                 sys.stderr.write(line)
                                 pass			
@@ -59,11 +57,13 @@ def parse(line, region):
 		#part 2
 		match = re.search("marker([0-9]+) = addMarker.'(-*[0-9]+\.[0-9]+)','(-*[0-9]+\.[0-9]+)','([a-zA-Z]+)'", parts[1])
 		if match:
-                        if res[region].get(match.group(1)) is None:
-                                res[region][match.group(1)] = {}
-                        res[region][match.group(1)]["latitude"] = match.group(2)
-                        res[region][match.group(1)]["longitude"] = match.group(3)
-                        res[region][match.group(1)]["name"] = match.group(4)
+                        current_station_data["latitude"] = match.group(2)
+                        current_station_data["longitude"] = match.group(3)
+                        current_station_data["name"] = match.group(4)
+		current_station_data['id'] = current_station
+		res[region]['stations'].append(current_station_data)
+		current_station_data = {}
+		current_station += 1
 
 def get_prices_from_table(prices_table):
 	trs = prices_table.find_all("tr")
@@ -85,7 +85,7 @@ def get_address_from_table(address_table):
 def get_ammenities_from_table(ammenities_table):
 	counter = 0
 	type_map = {0: "bathroom", 1: "pharmacy", 2: "mechanic", 3: "kiosk"}
-	ret = {}
+	ret = {'bathroom': False, 'pharmacy': False, 'mechanic': False, 'kiosk': False}
 	for td in ammenities_table.find_all("td"):
 		if td.img is not None and td.img["src"].endswith('no.gif'):
 			ret[type_map[counter]] = False
@@ -119,12 +119,12 @@ def get_pay_methods_from_table(pay_methods_table):
 
 if __name__ == "__main__":
 	token = find_token('token.html')
-	for region in xrange(1, 16):
+	for region in xrange(1, 2):
 		download_coords(token, region, 'coords.html')
 		with open('coords.html') as f:
 			for line in f:
-				parse(line, region)
+				parse(line, region, {})
 	
-	os.remove('coords.html')
-	os.remove('token.html')
+	#os.remove('coords.html')
+	#os.remove('token.html')
 	print json.dumps(res)
