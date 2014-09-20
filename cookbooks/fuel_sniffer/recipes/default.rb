@@ -29,6 +29,6 @@ execute 'npm install -g express' do
   command 'npm install -g express'
 end
 
-exeucte 'npm install -g express-generator' do
+execute 'npm install -g express-generator' do
   command 'npm install -g express-generator'
 end
