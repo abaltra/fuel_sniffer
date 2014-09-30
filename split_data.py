@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: latin-1 -*-
 
-import sys, re, json, urllib2, os
+import sys, re, json, urllib2, argparse
 from bs4 import BeautifulSoup
 from subprocess import Popen, PIPE
 from get_token import find_token
@@ -9,6 +9,9 @@ from download_coords import download_coords
 
 res = {}
 current_station = 1
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-r", "--regions", help="Number of regions to parse (from first)", type=int,  default=1)
 
 def parse(line, region, current_station_data = {}):
 	global current_station
@@ -118,8 +121,9 @@ def get_pay_methods_from_table(pay_methods_table):
 	return ret
 
 if __name__ == "__main__":
+	args = parser.parse_args()
 	token = find_token('token.html')
-	for region in xrange(1, 2):
+	for region in xrange(1, args.regions + 1):
 		download_coords(token, region, 'coords.html')
 		with open('coords.html') as f:
 			for line in f:
