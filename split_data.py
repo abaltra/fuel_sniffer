@@ -3,7 +3,6 @@
 
 import sys, re, json, urllib2, os, argparse
 from bs4 import BeautifulSoup
-from subprocess import Popen, PIPE
 from get_token import find_token
 from download_coords import download_coords
 
