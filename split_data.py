@@ -18,6 +18,10 @@ def parse(line, region, current_station_data = {}):
         res[region] = {'stations':[]}
     if line.startswith("<img src"):
         current_station_data = {}
+        match = re.search("Servicio, (.+)<script>", line)
+        if match:
+            res[region]['name'] = match.group(1)
+            match = None
         match = re.search("marker([0-9]+) = addMarker.'(-*[0-9]+\.[0-9]+)','(-*[0-9]+\.[0-9]+)','([a-zA-Z]+)'", line)
         if match:
             current_station_data["latitude"] = match.group(2)
@@ -54,11 +58,12 @@ def parse(line, region, current_station_data = {}):
         #part 2
         match = re.search("marker([0-9]+) = addMarker.'(-*[0-9]+\.[0-9]+)','(-*[0-9]+\.[0-9]+)','([a-zA-Z]+)'", parts[1])
         if match:
-                        current_station_data["latitude"] = match.group(2)
-                        current_station_data["longitude"] = match.group(3)
-                        current_station_data["name"] = match.group(4)
+            current_station_data["latitude"] = match.group(2)
+            current_station_data["longitude"] = match.group(3)
+            current_station_data["name"] = match.group(4)
         current_station_data['id'] = current_station
         res[region]['stations'].append(current_station_data)
+
         current_station_data = {}
         current_station += 1
 
@@ -73,7 +78,7 @@ def get_prices_from_table(prices_table):
     return ret
 
 def get_address_from_table(address_table):
-    return str(address_table.td.text.encode("utf-8", "ignore"))
+    return address_table.td.text.encode("utf-8", "replace")
 
 def get_ammenities_from_table(ammenities_table):
     counter = 0
@@ -96,7 +101,7 @@ def get_schedule_from_table(schedule_table):
             if "24" in td.text:
                 return "24 hrs"
             else:
-                return str(td.text.encode("utf-8", "ignore"))
+                return td.text.encode("utf-8", "replace")
 
 def get_pay_methods_from_table(pay_methods_table):
     #First one is only the tile
@@ -127,7 +132,7 @@ if __name__ == "__main__":
             for line in f:
                 parse(line, region, {})
     
-    if debug is False:
+    if debug is True:
         os.remove('coords.html')
         os.remove('token.html')
-    print json.dumps(res)
+        print json.dumps(res)
