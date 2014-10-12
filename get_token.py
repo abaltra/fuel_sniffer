@@ -8,7 +8,7 @@ def find_token(file_name):
 	with open(file_name) as f:
 		for line in f:
 			r = re.search(r"buscar_en_mapa\('([0-9a-zA-Z]+)'\)", line)
-			if r:	
+			if r:
 				return r.group(1)
 
 if __name__=="__main__":
