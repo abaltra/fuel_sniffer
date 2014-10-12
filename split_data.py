@@ -114,13 +114,14 @@ def get_args():
     parser = argparse.ArgumentParser(description='Scrape bencinaenlinea.cl for current chilean gas/fuel prices and station locations across the country',
         epilog='Happy sniffing!')
     parser.add_argument('-d', '--debug', action='store_true', help='Run in debug mode')
-    parser.add_argument('-r', '--regions', choices=[x for x in xrange(1, 16)], help='Number of regions to process (starting from 1)', default=15)
+    parser.add_argument('-r', '--regions', choices=[x for x in xrange(1, 15)], help='Number of regions to process (starting from 1)', default=14, type=int)
     return parser.parse_args()
 
 if __name__ == "__main__":
     args = get_args()
+    debug = args.debug
     token = find_token('token.html')
-    for region in xrange(1, 2):
+    for region in xrange(1, args.regions + 1):
         download_coords(token, region, 'coords.html')
         with open('coords.html') as f:
             for line in f:
