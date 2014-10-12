@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: latin-1 -*-
 
-import sys, re, json, urllib2, os
+import sys, re, json, urllib2, os, argparse
 from bs4 import BeautifulSoup
 from subprocess import Popen, PIPE
 from get_token import find_token
@@ -9,6 +9,7 @@ from download_coords import download_coords
 
 res = {}
 current_station = 1
+debug = False
 
 def parse(line, region, current_station_data = {}):
     global current_station
@@ -110,7 +111,15 @@ def get_pay_methods_from_table(pay_methods_table):
         ret[name] = True
     return ret
 
+def get_args():
+    parser = argparse.ArgumentParser(description='Scrape bencinaenlinea.cl for current chilean gas/fuel prices and station locations across the country',
+        epilog='Happy sniffing!')
+    parser.add_argument('-d', '--debug', action='store_true', help='Run in debug mode')
+    parser.add_argument('-r', '--regions', choices=[x for x in xrange(1, 16)], help='Number of regions to process (starting from 1)', default=15)
+    return parser.parse_args()
+
 if __name__ == "__main__":
+    args = get_args()
     token = find_token('token.html')
     for region in xrange(1, 2):
         download_coords(token, region, 'coords.html')
@@ -118,6 +127,7 @@ if __name__ == "__main__":
             for line in f:
                 parse(line, region, {})
     
-    #os.remove('coords.html')
-    #os.remove('token.html')
+    if debug is False:
+        os.remove('coords.html')
+        os.remove('token.html')
     print json.dumps(res)
