@@ -1,14 +1,16 @@
 #!/usr/bin/python
 # -*- coding: latin-1 -*-
 
-import sys, re, json, urllib2, os, argparse
+import sys, re, json, urllib2, os, argparse, ConfigParser
 from bs4 import BeautifulSoup
 from get_token import find_token
 from download_coords import download_coords
+from pymongo import MongoClient
 
 res = {}
 current_station = 1
 debug = False
+db = None
 
 def parse(line, region, current_station_data = {}):
     global current_station
@@ -120,10 +122,21 @@ def get_args():
         epilog='Happy sniffing!')
     parser.add_argument('-d', '--debug', action='store_true', help='Run in debug mode')
     parser.add_argument('-r', '--regions', choices=[x for x in xrange(1, 15)], help='Number of regions to process (starting from 1)', default=14, type=int)
+    parser.add_argument('-c', '--config', help='Route to config file', default='sniffer.cfg', type=str)
     return parser.parse_args()
+
+def get_config(args):
+    global db
+    config = ConfigParser.ConfigParser()
+    config.read(args.config)
+
+    mongo = MongoClient(config.get('DB', 'host'), int(config.get('DB', 'port')))
+    db = mongo[config.get('DB', 'db')]
+
 
 if __name__ == "__main__":
     args = get_args()
+    get_config(args)
     debug = args.debug
     token = find_token('token.html')
     for region in xrange(1, args.regions + 1):
@@ -131,8 +144,10 @@ if __name__ == "__main__":
         with open('coords.html') as f:
             for line in f:
                 parse(line, region, {})
+
+    db.data.insert(res)
     
     if debug is True:
         os.remove('coords.html')
         os.remove('token.html')
-        print json.dumps(res)
+        #print json.dumps(res)

@@ -15,6 +15,7 @@ end
 package 'pkg-config'
 package 'nodejs-legacy'
 package 'npm'
+package 'python-dev'
 package 'python-pip'
 package 'tesseract-ocr'
 package 'imagemagick'
@@ -22,6 +23,11 @@ package 'vim'
 
 execute 'pip install beautifulsoup4' do
   command 'pip install beautifulsoup4'
+  action :run
+end
+
+execute 'pip install pymongo' do
+  command 'pip install pymongo'
   action :run
 end
 
