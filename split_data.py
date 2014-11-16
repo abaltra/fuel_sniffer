@@ -5,8 +5,6 @@ import sys, re, json, urllib2, os, argparse, ConfigParser
 from bs4 import BeautifulSoup
 from get_token import find_token
 from download_coords import download_coords
-from pymongo import MongoClient
-
 res = {}
 current_station = 1
 debug = False
@@ -126,13 +124,8 @@ def get_args():
     return parser.parse_args()
 
 def get_config(args):
-    global db
     config = ConfigParser.ConfigParser()
     config.read(args.config)
-
-    mongo = MongoClient(config.get('DB', 'host'), int(config.get('DB', 'port')))
-    db = mongo[config.get('DB', 'db')]
-
 
 if __name__ == "__main__":
     args = get_args()
@@ -145,7 +138,7 @@ if __name__ == "__main__":
             for line in f:
                 parse(line, region, {})
 
-    db.data.insert(res)
+    print res
     
     if debug is True:
         os.remove('coords.html')
